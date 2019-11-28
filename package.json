@@ -1,0 +1,27 @@
+{
+  "name": "prog6-webservice",
+  "version": "1.0.0",
+  "description": "A basic webservice made using the MERN-stack",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvbeelen/prog6-webservice.git"
+  },
+  "author": "Dion van Beelen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvbeelen/prog6-webservice/issues"
+  },
+  "homepage": "https://github.com/dvbeelen/prog6-webservice#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.1"
+  }
+}
