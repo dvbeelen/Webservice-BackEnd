@@ -1,2 +1,4 @@
-# prog6-webservice
- A webservice made using the MERN-stack
+# Portfolio Webservice
+ A webservice made using the MERN-stack. Created for a school assignment.
+ 
+
