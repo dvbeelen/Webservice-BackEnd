@@ -3,3 +3,15 @@ GET http://localhost:8000/cases
 ###
 
 GET http://localhost:8000/cases/29000
+
+###
+
+POST http://localhost:8000/cases
+Content-Type: application/json
+
+{
+    "projectName": "Plantacle",
+    "clientName": "Blue City",
+    "summary": "Make your own compost!",
+    "description": "For this client we created a composting-module and an app."
+}
