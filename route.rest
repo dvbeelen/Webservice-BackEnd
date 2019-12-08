@@ -2,7 +2,7 @@ GET http://localhost:8000/cases
 
 ###
 
-GET http://localhost:8000/cases/
+GET http://localhost:8000/cases/5deccf3d04c1054f44d24349
 
 ###
 
@@ -10,23 +10,23 @@ POST http://localhost:8000/cases
 Content-Type: application/json
 
 {
-    "projectName": "Plantacle",
-    "clientName": "Blue City",
-    "summary": "Make your own compost!",
-    "description": "For this client we created a composting-module and an app."
+    "projectName": "Fourth Project",
+    "clientName": "Nobody in particular",
+    "summary": "Fourth Project!",
+    "description": "This is the fourth project."
 }
 
 ###
 
-DELETE  http://localhost:8000/cases/5de042a71eada53bd874a359
+DELETE  http://localhost:8000/cases/5debd3b2dd05614ba8b8b0e2
 
 ###
 
-PATCH   http://localhost:8000/cases/5de043fcec6fd029f46c6159
+PATCH   http://localhost:8000/cases/5decbc0de19edf13f82ef61c
 Content-Type: application/json
 
 {
-    "clientName": "Blue City, Hogeschool Rotterdam"
+    "description": "Project for TLE 1 and 2"
 }
 
 ###

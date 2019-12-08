@@ -6,7 +6,18 @@ const Case = require('../models/portfolio_cases');
 router.get('/', async (req, res) => {
     try {
         const cases = await Case.find();
-        res.json(cases);
+        const items = {}
+        items.items = cases
+        items._links = {
+            rel: "self",
+            method: "GET",
+            href: "'http://145.24.222.215:8000/cases'"
+        }
+        items.pagination = {
+                page: 1,
+                limit: 1
+        }
+        res.json(items);
     } catch(err) {
         res.status(500).json({ message: err.message });
     }
@@ -14,7 +25,14 @@ router.get('/', async (req, res) => {
 
 //Get one case
 router.get('/:id', getCaseId, (req, res) => {
-    res.json(res.cases);
+    const item = {}
+    item.item = res.cases
+    item._links = {
+        rel: "collection",
+        method: "GET", 
+        herf: "http://145.24.222.215:8000/cases"
+    }
+    res.json(item);
 });
 
 //Create new case
