@@ -1,22 +1,53 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 const Case = require('../models/portfolio_cases');
+
+//Give back OPTIONS
+router.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Allow', 'GET, POST, OPTIONS');
+
+    //intercepts OPTIONS method
+    if ('OPTIONS' === req.method) {
+      //respond with 200
+      res.sendStatus(200);
+    }
+    else {
+    //move on
+      next();
+    }
+});
 
 //Get all cases
 router.get('/', async (req, res) => {
     try {
-        const cases = await Case.find();
-        const items = {}
-        items.items = cases
-        items._links = {
-            rel: "self",
-            method: "GET",
-            href: "'http://145.24.222.215:8000/cases'"
+        const cases = await Case.find().lean().exec();
+        for (const c of cases) {
+            c._links = {
+                self: {
+                    href: `http://145.24.222.215:8000/cases/${c._id}`
+                },
+                collection: {
+                    href: `http://145.24.222.215:8000/cases/`
+                }
+                
+            }
         }
-        items.pagination = {
+        const items = {
+            items: cases,
+            _links: {
+                self: {
+                    href: "http://145.24.222.215:8000/cases"
+                }
+            },
+            pagination: {
                 page: 1,
                 limit: 1
-        }
+            }
+        }        
         res.json(items);
     } catch(err) {
         res.status(500).json({ message: err.message });
@@ -28,9 +59,12 @@ router.get('/:id', getCaseId, (req, res) => {
     const item = {}
     item.item = res.cases
     item._links = {
-        rel: "collection",
-        method: "GET", 
-        herf: "http://145.24.222.215:8000/cases"
+        self: {
+            href: `http://145.24.222.215:8000/cases/${res.cases._id}`
+        },
+        collection: {
+            href: `http://145.24.222.215:8000/cases/`
+        }
     }
     res.json(item);
 });

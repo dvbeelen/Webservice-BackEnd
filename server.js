@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const hateoasLinker = require('express-hateoas-links');
 
 //Connect to the database.
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true});
@@ -14,7 +13,6 @@ db.on('error', (error) => console.error(error));
 db.once('open', (error) => console.log('Connected to database succesfully.'));
 
 app.use(express.json());
-app.use(hateoasLinker);
 
 const casesRouter = require('./routes/cases');
 app.use('/cases', casesRouter);

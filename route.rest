@@ -31,20 +31,29 @@ Content-Type: application/json
 
 ###
 
-OPTIONS   http://localhost:8000/cases/5de042a71eada53bd874a359
+OPTIONS   http://localhost:8000/cases/
 
 ###
 POST http://145.24.222.215:8000/cases
 Content-Type: application/json
 
 {
-    "projectName": "Castlevania: Holy Fires",
+    "projectName": "Sixth project",
     "clientName": "Own project",
-    "summary": "A remake of The Castlevania Adventure (1989)",
-    "description": "A fangame created to celebrate the 30th anniversary of a very underrated Castlevania game."
+    "summary": "An upcoming project",
+    "description": "An upcoming project"
 }
 
 ###
+
+PATCH   http://145.24.222.215:8000/cases/5def8f166d465f6f7eb75960
+Content-Type: application/json
+
+{
+    "description": "A web-application, used by flower-transporters."
+}
+
+### 
 
 GET http://145.24.222.215:8000/cases
 
