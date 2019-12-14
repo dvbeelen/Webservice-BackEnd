@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const cors = require('cors');
 const Case = require('../models/portfolio_cases');
 
 //Give back OPTIONS
@@ -10,19 +9,23 @@ router.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.header('Allow', 'GET, POST, OPTIONS');
 
+
     //intercepts OPTIONS method
     if ('OPTIONS' === req.method) {
       //respond with 200
       res.sendStatus(200);
     }
+    else if (req.headers.accept != 'application/json') {
+          res.sendStatus(400);
+        }
     else {
-    //move on
-      next();
+        next()
     }
 });
 
 //Get all cases
 router.get('/', async (req, res) => {
+
     try {
         const cases = await Case.find().lean().exec();
         for (const c of cases) {
@@ -79,8 +82,8 @@ router.post('/', async (req, res) => {
     });
 
     try {
-        const createdCase = await newCase.save();
-        res.status(201).json(createdCase);
+            const createdCase = await newCase.save();
+            res.status(201).json(createdCase);
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
