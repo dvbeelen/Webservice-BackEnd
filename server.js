@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const bp = require('body-parser');
+const cors = require('cors');
 
 //Connect to the database.
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true});
@@ -13,6 +15,8 @@ db.on('error', (error) => console.error(error));
 db.once('open', (error) => console.log('Connected to database succesfully.'));
 
 app.use(express.json());
+app.use(bp.urlencoded({ extended: false })); 
+app.use(cors()); 
 
 const casesRouter = require('./routes/cases');
 app.use('/cases', casesRouter);
