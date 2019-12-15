@@ -7,7 +7,7 @@ router.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Allow', 'GET, POST, PATCH, OPTIONS');
+    res.header('Allow', 'GET, POST, OPTIONS');
 
 
     //intercepts OPTIONS method
@@ -90,7 +90,7 @@ router.post('/', async (req, res) => {
 });
 
 //Update existing case
-router.patch('/:id', getCaseId, async (req, res) => {
+router.put('/:id', getCaseId, async (req, res) => {
     if(req.body.projectName != null){
         res.cases.projectName = req.body.projectName;
     }
@@ -115,7 +115,7 @@ router.patch('/:id', getCaseId, async (req, res) => {
 router.delete('/:id', getCaseId, async (req, res) => {
     try {
         await res.cases.remove();
-        res.json('Case deleted.')
+        res.status(204).json('Case deleted.')
     } catch(err) {
         res.status(500).json({ message: err.message });
     }
