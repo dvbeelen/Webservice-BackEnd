@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Case = require('../models/portfolio_cases');
 const pagination = require('../pagination'); 
+const controller = require('../controller/caseController')
 
 //Give back OPTIONS
 router.options("/", function(req, res, next){
@@ -75,8 +76,9 @@ router.get('/:id', getCaseId, (req, res) => {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
     res.header('Allow', 'GET, PUT, DELETE, OPTIONS');
     
-    const item = {}
-    item.item = res.cases
+    const item = res.cases;
+   
+    
     item._links = {
         self: {
             href: `http://145.24.222.215:8000/cases/${res.cases._id}`
@@ -85,6 +87,7 @@ router.get('/:id', getCaseId, (req, res) => {
             href: `http://145.24.222.215:8000/cases/`
         }
     }
+     JSON.stringify(item);
     res.json(item);
   
 });
@@ -107,43 +110,7 @@ router.post('/', async (req, res) => {
 });
 
 //Update existing case
-router.put('/:id', getCaseId, async (req, res) => {
-    //Check and send projectName if correct.
-    if(req.body.projectName != null){
-        res.cases.projectName = req.body.projectName;
-    }
-    if (req.body.projectName === "") {
-        res.send(400).json({"message": "Projectname is required."})
-    } 
-    //Check and send clientName if correct.
-    if(req.body.clientName != null){
-        res.cases.clientName = req.body.clientName;
-    }
-    if(req.body.clientName === "") {
-        res.send(400).json({"message": "Clientname is required."})
-    }
-    //Check and send summary if correct.
-    if(req.body.summary != null){
-        res.cases.summary = req.body.summary;
-    }
-    if(req.body.summary === "") {
-        res.send(400).json({"message": "Summary is required."})
-    }
-    //Check and send description if correct.
-    if(req.body.description != null){
-        res.cases.description = req.body.description;
-    } 
-    if(req.body.description === "") {
-        res.send(400).json({"message": "Description is required."})
-    }
-
-    try {
-        const updatedCase = await res.cases.save();
-        res.status(200).json(updatedCase);
-    } catch(err) {
-        res.status(400).json({ message: err.message});
-    }
-});
+router.put('/:id', controller.update)
 
 //Delete case
 router.delete('/:id', getCaseId, async (req, res) => {
