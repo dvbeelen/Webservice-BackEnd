@@ -76,20 +76,9 @@ router.get('/:id', getCaseId, (req, res) => {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
     res.header('Allow', 'GET, PUT, DELETE, OPTIONS');
     
-    const item = res.cases;
-   
-    
-    item._links = {
-        self: {
-            href: `http://145.24.222.215:8000/cases/${res.cases._id}`
-        },
-        collection: {
-            href: `http://145.24.222.215:8000/cases/`
-        }
-    }
-     JSON.stringify(item);
-    res.json(item);
-  
+    let item = res.cases
+    res.status(200).json(item);
+
 });
 
 //Create new case

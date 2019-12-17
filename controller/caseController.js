@@ -16,7 +16,7 @@ module.exports = {
 
     update: (req, res) => {
 
-        if (caseCheck(req)) res.status(404).send(errors);
+        if (caseCheck(req)) res.status(400).send(caseCheck.errors);
         Case.findByIdAndUpdate(req.params.id, req.body).then(cases => {
             res.status(200).json(cases)
         }).catch(err => {
