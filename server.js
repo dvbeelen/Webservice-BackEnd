@@ -14,7 +14,7 @@ db.on('error', (error) => console.error(error));
 db.once('open', (error) => console.log('Connected to database succesfully.'));
 
 app.use(express.json());
-app.use(bp.urlencoded({ extended: false })); 
+app.use(bp.json()); 
 
 const casesRouter = require('./routes/cases');
 app.use('/cases', casesRouter);

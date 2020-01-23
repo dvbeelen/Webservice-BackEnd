@@ -11,12 +11,6 @@ router.options("/", function(req, res, next){
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.header('Allow', 'GET, POST, OPTIONS');
     res.send(200);
-    if (req.headers.accept != 'application/json'||req.headers.accept != 'application/x-www-form-urlencoded') {
-          res.sendStatus(400);
-        }
-    else {
-        next()
-    }
 });
 
 //Give back OPTIONS for details-page
@@ -26,19 +20,14 @@ router.options("/:id", function(req, res, next){
     res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,OPTIONS');
     res.header('Allow', 'GET,PUT,DELETE,OPTIONS');
     res.send(200);
-    if (req.headers.accept != 'application/json') {
-          res.sendStatus(400);
-        }
-    else {
-        next()
-    }
+
 });
 
 //Get all cases
 router.get('/', async (req, res) => {
-    if (req.headers.accept != 'application/json') {
-        res.status(400).json({"message": "Data is only send in a JSON-format."});
-    }
+    
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     try {
         const cases = await Case.find().lean().exec();
@@ -83,6 +72,8 @@ router.get('/:id', getCaseId, (req, res) => {
 
 //Create new case
 router.post('/', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+
     const newCase = new Case({
         projectName: req.body.projectName,
         clientName: req.body.clientName,
@@ -103,6 +94,7 @@ router.put('/:id', controller.update)
 
 //Delete case
 router.delete('/:id', getCaseId, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
     try {
         await res.cases.remove();
         res.status(204).json('Case deleted.')
